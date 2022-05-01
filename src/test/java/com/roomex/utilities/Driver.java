@@ -61,6 +61,16 @@ public class Driver {
                     WebDriverManager.getInstance(SafariDriver.class).setup();
                     driver = new SafariDriver();
                     break;
+                case "remote-chrome":
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.setCapability("platform","Platform.ANY");
+                    try {
+                        driver = new RemoteWebDriver(new URL(ConfigurationReader.get("remoteURL")),
+                                chromeOptions);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+
             }
         }
         return driver;
