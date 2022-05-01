@@ -11,6 +11,8 @@ import org.junit.Assert;
 
 public class LoginStepDefs {
 
+    LoginPage loginPage = new LoginPage();
+
     @Given("the user is on the login page")
     public void the_user_is_on_the_login_page() {
         Driver.get().get(ConfigurationReader.get("url"));
@@ -19,25 +21,21 @@ public class LoginStepDefs {
 
     @When("user clicks Login button")
     public void userClicksLoginButton() {
-        LoginPage loginPage = new LoginPage();
-
         loginPage.loginBtn.click();
     }
 
     @Then("email error message displayed")
     public void email_error_message_displayed() {
-        LoginPage loginPage = new LoginPage();
-
-        Assert.assertTrue("email error msg displayed",
-                loginPage.isMsgDisplayed(loginPage.emailErrorMsg));
+        //If we want to check error msg is displayed or not (WebElement is null or not)
+        Assert.assertNotNull(loginPage.getErrorMsgElement("email"));
+        //If we want to check error msg is not or not
+        Assert.assertNotNull("email error msg displayed",loginPage.getErrorMsg("email"));
     }
 
     @And("password error message displayed")
     public void password_error_message_displayed() {
-        LoginPage loginPage = new LoginPage();
-
-        Assert.assertTrue("email error msg displayed",
-                loginPage.isMsgDisplayed(loginPage.passwordErrorMsg));
+        //Same as above
+        Assert.assertNotNull("password error msg displayed",loginPage.getErrorMsg("password"));
     }
 
 }
